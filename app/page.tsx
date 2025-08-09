@@ -1,56 +1,53 @@
-import { Link } from "@heroui/link";
-import { Snippet } from "@heroui/snippet";
-import { Code } from "@heroui/code";
-import { button as buttonStyles } from "@heroui/theme";
-
-import { siteConfig } from "@/config/site";
-import { title, subtitle } from "@/components/primitives";
-import { GithubIcon } from "@/components/icons";
+"use client";
+import { Product } from "@/types";
+import { useEffect, useState } from "react";
+import { Spinner } from "@heroui/spinner";
+import ProductCard from "@/components/productCard";
 
 export default function Home() {
-  return (
-    <section className="flex flex-col items-center justify-center gap-4 py-8 md:py-10">
-      <div className="inline-block max-w-xl text-center justify-center">
-        <span className={title()}>Make&nbsp;</span>
-        <span className={title({ color: "violet" })}>beautiful&nbsp;</span>
-        <br />
-        <span className={title()}>
-          websites regardless of your design experience.
-        </span>
-        <div className={subtitle({ class: "mt-4" })}>
-          Beautiful, fast and modern React UI library.
-        </div>
-      </div>
+  const [products, setProducts] = useState<Product[] | null>(null);
+  const [loading, setLoading] = useState(true);
 
-      <div className="flex gap-3">
-        <Link
-          isExternal
-          className={buttonStyles({
-            color: "primary",
-            radius: "full",
-            variant: "shadow",
-          })}
-          href={siteConfig.links.docs}
-        >
-          Documentation
-        </Link>
-        <Link
-          isExternal
-          className={buttonStyles({ variant: "bordered", radius: "full" })}
-          href={siteConfig.links.github}
-        >
-          <GithubIcon size={20} />
-          GitHub
-        </Link>
-      </div>
+  useEffect(() => {
+    const getProducts = async () => {
+      fetch("https://fakestoreapi.com/products")
+        .then((response) => response.json())
+        .then((data) => setProducts(data))
+        .then(() => setLoading(false));
+    };
 
-      <div className="mt-8">
-        <Snippet hideSymbol variant="bordered">
-          <span>
-            Get started by editing <Code color="primary">app/page.tsx</Code>
-          </span>
-        </Snippet>
+    getProducts();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="flex w-full h-fit items-center justify-center">
+        <Spinner size="lg" />
       </div>
-    </section>
-  );
+    );
+  }
+
+  if (products) {
+    return (
+      <div className="grid grid-cols-3 gap-6">
+        {products.map((product) => (
+          <ProductCard
+            key={product.id}
+            id={product.id}
+            title={product.title}
+            price={product.price}
+            description={product.description}
+            category={product.category}
+            image={product.image}
+            rating={{
+              rate: product.rating.rate,
+              count: product.rating.count,
+            }}
+          />
+        ))}
+      </div>
+    );
+  }
+
+  return <div>Ürün Bulunamadı</div>;
 }
