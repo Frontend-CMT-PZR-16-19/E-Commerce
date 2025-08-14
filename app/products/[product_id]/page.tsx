@@ -7,9 +7,11 @@ import { Button } from "@heroui/button";
 import { Chip } from "@heroui/chip";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import { useCart } from "@/components/context/cartContext";
 import { NumberInput } from "@heroui/number-input";
 
 export default function ProductDetailPage() {
+  const { addToCart } = useCart();
   const { product_id } = useParams();
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
@@ -158,10 +160,13 @@ export default function ProductDetailPage() {
                     size="lg"
                     className="flex-1"
                     onPress={() => {
-                      // Add to cart logic here
-                      console.log(
-                        `${quantity} adet ${product.title} sepete eklendi`
-                      );
+                      addToCart({
+                        id: String(product.id),
+                        name: product.title,
+                        price: product.price,
+                        quantity: quantity,
+                        image: product.image || "",
+                      });
                     }}
                   >
                     Sepete Ekle

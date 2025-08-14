@@ -23,9 +23,12 @@ declare module "@react-types/shared" {
 export function Providers({ children, themeProps }: ProvidersProps) {
   const router = useRouter();
 
+  const { CartProvider } = require("../components/context/cartContext");
   return (
     <HeroUIProvider navigate={router.push}>
-      <NextThemesProvider {...themeProps}>{children}</NextThemesProvider>
+      <CartProvider>
+        <NextThemesProvider {...themeProps}>{children}</NextThemesProvider>
+      </CartProvider>
     </HeroUIProvider>
   );
 }

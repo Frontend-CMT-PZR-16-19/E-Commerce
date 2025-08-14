@@ -17,6 +17,8 @@ import clsx from "clsx";
 
 import { siteConfig } from "@/config/site";
 import { ThemeSwitch } from "@/components/theme-switch";
+import { FaBasketShopping } from "react-icons/fa6";
+
 import {
   TwitterIcon,
   GithubIcon,
@@ -59,6 +61,15 @@ export const Navbar = () => {
         justify="end"
       >
         <NavbarItem className="hidden sm:flex gap-2">
+          <Link
+          href="/cart">
+            <span className="text-sm font-normal text-default-600">
+              <FaBasketShopping 
+              className="text-sm font-normal text-default-600 w-7 h-7 bg-transparent rounded-full p-1"
+              href="/cart"
+              />
+            </span>
+          </Link>
           <ThemeSwitch />
         </NavbarItem>
 
