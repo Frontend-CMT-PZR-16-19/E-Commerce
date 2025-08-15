@@ -1,17 +1,15 @@
 'use client';
-import { useCart } from './context/cartContext';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from '@/store';
+import { removeFromCart, clearCart } from '@/store/cartSlice';
 import { Card, CardBody, CardHeader } from '@heroui/card';
 import { Button } from '@heroui/button';
 import { Chip } from '@heroui/chip';
 import { FaDivide } from 'react-icons/fa6';
 
 export default function CartPage() {
-  const { cartItems, removeFromCart } = useCart();
-  // Sepeti temizle fonksiyonu
-  const clearCart = () => {
-    cartItems.forEach((item) => removeFromCart(item.id));
-  };
-
+  const dispatch = useDispatch();
+  const cartItems = useSelector((state: RootState) => state.cart.items);
   const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
   return (
@@ -56,7 +54,7 @@ export default function CartPage() {
               <div className="flex flex-col md:flex-row justify-between items-center gap-6">
                 <div className="text-3xl font-extrabold text-primary-dark">Genel Toplam: <span className="text-green-600">{total} TL</span></div>
                 <div className="flex gap-3">
-                  <Button color="default" variant="bordered" size="lg" radius="full" onClick={clearCart}>Sepeti Temizle</Button>
+                  <Button color="default" variant="bordered" size="lg" radius="full" onClick={() => dispatch(clearCart())}>Sepeti Temizle</Button>
                   <Button as="a" href="/products" color="primary" size="lg" radius="full">Alışverişe Devam Et</Button>
                   <Button color="success" size="lg" radius="full" className="font-bold shadow-lg">Satın Al</Button>
                 </div>

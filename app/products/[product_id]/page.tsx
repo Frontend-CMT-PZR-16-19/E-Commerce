@@ -7,11 +7,12 @@ import { Button } from "@heroui/button";
 import { Chip } from "@heroui/chip";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { useCart } from "@/components/context/cartContext";
+import { useDispatch } from "react-redux";
+import { addToCart } from "@/store/cartSlice";
 import { NumberInput } from "@heroui/number-input";
 
 export default function ProductDetailPage() {
-  const { addToCart } = useCart();
+  const dispatch = useDispatch();
   const { product_id } = useParams();
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
@@ -160,13 +161,13 @@ export default function ProductDetailPage() {
                     size="lg"
                     className="flex-1"
                     onPress={() => {
-                      addToCart({
+                      dispatch(addToCart({
                         id: String(product.id),
                         name: product.title,
                         price: product.price,
                         quantity: quantity,
                         image: product.image || "",
-                      });
+                      }));
                     }}
                   >
                     Sepete Ekle
