@@ -8,13 +8,16 @@ import { Chip } from "@heroui/chip";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { NumberInput } from "@heroui/number-input";
+import { useCartStore } from "@/store/cartStore";
+import { useRouter } from "next/navigation";
 
 export default function ProductDetailPage() {
   const { product_id } = useParams();
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [quantity, setQuantity] = useState<number>(1);
-
+  const addToCart = useCartStore((state) => state.addProductToCart);
+  const router = useRouter();
   // Rating component
   const RatingStars = ({ rate, count }: { rate: number; count: number }) => {
     const fullStars = Math.floor(rate);
@@ -157,12 +160,7 @@ export default function ProductDetailPage() {
                     color="primary"
                     size="lg"
                     className="flex-1"
-                    onPress={() => {
-                      // Add to cart logic here
-                      console.log(
-                        `${quantity} adet ${product.title} sepete eklendi`
-                      );
-                    }}
+                    onPress={() => addToCart(product, quantity)}
                   >
                     Sepete Ekle
                   </Button>
@@ -172,10 +170,8 @@ export default function ProductDetailPage() {
                     variant="bordered"
                     size="lg"
                     onPress={() => {
-                      // Buy now logic here
-                      console.log(
-                        `${quantity} adet ${product.title} hemen satın al`
-                      );
+                      addToCart(product, quantity);
+                      router.push("/cart");
                     }}
                   >
                     Hemen Al
