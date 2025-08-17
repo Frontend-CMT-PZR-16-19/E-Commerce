@@ -53,8 +53,13 @@ export default function Cart() {
           />
         ))}
       </div>
-      <Card className="w-[24%] p-4 h-fit ">
-        <h3 className="text-xl">Total price: {totalPrice.toFixed(2)}$</h3>
+      <Card className="w-[24%] p-4 h-fit space-y-8">
+        <div>
+          <h3 className="text-xl">Total price: {totalPrice.toFixed(2)}$</h3>
+          <p className="text-tiny">
+            Ödemeleriniz şöyle güvenlidir böyle secure'dur.
+          </p>
+        </div>
         <Button color="primary">Complete Order</Button>
       </Card>
     </div>
