@@ -20,9 +20,21 @@ import { ThemeSwitch } from "@/components/theme-switch";
 import { GithubIcon, Logo } from "@/components/icons";
 import { CartIcon } from "@/assets/icons/cartIcon";
 import { useCartStore } from "@/store/cartStore";
+import {
+  SignedIn,
+  SignedOut,
+  SignInButton,
+  SignUpButton,
+  UserButton,
+  useUser,
+} from "@clerk/nextjs";
+import { Button } from "@heroui/button";
+import { useRouter } from "next/navigation";
 
 export const Navbar = () => {
   const products = useCartStore((state) => state.productList);
+  const { user, isLoaded, isSignedIn } = useUser();
+  const router = useRouter();
 
   return (
     <HeroUINavbar maxWidth="xl" position="sticky">
@@ -76,12 +88,36 @@ export const Navbar = () => {
             </Badge>
           </Link>
         </NavbarItem>
+        <NavbarItem className="hidden md:flex">
+          <header className="flex justify-end items-center p-4 gap-4 h-16">
+            <SignedOut>
+              <SignInButton>
+                <Button variant="faded" color="primary">
+                  Sign In
+                </Button>
+              </SignInButton>
+              <SignUpButton>
+                <Button variant="solid" color="primary">
+                  Sign Up
+                </Button>
+              </SignUpButton>
+            </SignedOut>
+            <SignedIn>
+              <UserButton>
+                <UserButton.MenuItems>
+                  <UserButton.Action
+                    label="Open chat"
+                    labelIcon={<CartIcon size={40} height={40} width={40} />}
+                    onClick={() => router.push("/profile")}
+                  />
+                </UserButton.MenuItems>
+              </UserButton>
+            </SignedIn>
+          </header>
+        </NavbarItem>
       </NavbarContent>
 
       <NavbarContent className="sm:hidden basis-1 pl-4" justify="end">
-        <Link isExternal aria-label="Github" href={siteConfig.links.github}>
-          <GithubIcon className="text-default-500" />
-        </Link>
         <ThemeSwitch />
         <NavbarMenuToggle />
       </NavbarContent>
