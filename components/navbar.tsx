@@ -20,6 +20,7 @@ import { ThemeSwitch } from "@/components/theme-switch";
 import { GithubIcon, Logo } from "@/components/icons";
 import { CartIcon } from "@/assets/icons/cartIcon";
 import { useCartStore } from "@/store/cartStore";
+import { CustomUserButton } from "@/components/custom-user-button";
 import {
   SignedIn,
   SignedOut,
@@ -35,6 +36,9 @@ export const Navbar = () => {
   const products = useCartStore((state) => state.productList);
   const { user, isLoaded, isSignedIn } = useUser();
   const router = useRouter();
+
+  // Toggle between standard Clerk UserButton and Custom HeroUI UserButton
+  const useCustomUserButton = true; // Set to false to use standard Clerk UserButton
 
   return (
     <HeroUINavbar maxWidth="xl" position="sticky">
@@ -103,15 +107,7 @@ export const Navbar = () => {
               </SignUpButton>
             </SignedOut>
             <SignedIn>
-              <UserButton>
-                <UserButton.MenuItems>
-                  <UserButton.Action
-                    label="Open chat"
-                    labelIcon={<CartIcon size={40} height={40} width={40} />}
-                    onClick={() => router.push("/profile")}
-                  />
-                </UserButton.MenuItems>
-              </UserButton>
+              <CustomUserButton />
             </SignedIn>
           </header>
         </NavbarItem>
