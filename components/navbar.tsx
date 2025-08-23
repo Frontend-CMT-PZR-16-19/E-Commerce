@@ -19,7 +19,7 @@ import { siteConfig } from "@/config/site";
 import { ThemeSwitch } from "@/components/theme-switch";
 import { GithubIcon, Logo } from "@/components/icons";
 import { CartIcon } from "@/assets/icons/cartIcon";
-import { useCartStore } from "@/store/cartStore";
+import { useAppSelector } from "@/store/hooks";
 import { CustomUserButton } from "@/components/custom-user-button";
 import {
   SignedIn,
@@ -33,7 +33,7 @@ import { Button } from "@heroui/button";
 import { useRouter } from "next/navigation";
 
 export const Navbar = () => {
-  const products = useCartStore((state) => state.productList);
+  const products = useAppSelector((state) => state.cart.productList);
   const { user, isLoaded, isSignedIn } = useUser();
   const router = useRouter();
 
