@@ -14,7 +14,6 @@ import { User } from "@heroui/user";
 import { Badge } from "@heroui/badge";
 import { Chip } from "@heroui/chip";
 import { Card, CardBody } from "@heroui/card";
-import { Divider } from "@heroui/divider";
 import { useRouter } from "next/navigation";
 
 // Simple icon components as replacements
