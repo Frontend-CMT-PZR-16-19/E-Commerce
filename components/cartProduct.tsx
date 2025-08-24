@@ -2,8 +2,7 @@ import { Product } from "@/types";
 import { Card } from "@heroui/card";
 import { Button } from "@heroui/button";
 import { Image } from "@heroui/image";
-import { useAppDispatch } from "@/store/hooks";
-import { addProductToCart, removeProductFromCart } from "@/store/cartSlice";
+import { useCartStore } from "@/store/cartStore";
 
 interface CartProductProps {
   product: Product;
@@ -11,14 +10,14 @@ interface CartProductProps {
 }
 
 export const CartProduct = ({ product, quantity }: CartProductProps) => {
-  const dispatch = useAppDispatch();
+  const { removeProductFromCart, addProductToCart } = useCartStore();
 
   const handleIncrement = () => {
-    dispatch(addProductToCart({ product, piece: 1 }));
+    addProductToCart(product, 1);
   };
 
   const handleDecrement = () => {
-    dispatch(removeProductFromCart(product));
+    removeProductFromCart(product);
   };
 
   return (

@@ -8,8 +8,7 @@ import { Chip } from "@heroui/chip";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { NumberInput } from "@heroui/number-input";
-import { useAppDispatch } from "@/store/hooks";
-import { addProductToCart } from "@/store/cartSlice";
+import { useCartStore } from "@/store/cartStore";
 import { useRouter } from "next/navigation";
 
 export default function ProductDetailPage() {
@@ -17,7 +16,7 @@ export default function ProductDetailPage() {
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [quantity, setQuantity] = useState<number>(1);
-  const dispatch = useAppDispatch();
+  const addToCart = useCartStore((state) => state.addProductToCart);
   const router = useRouter();
   // Rating component
   const RatingStars = ({ rate, count }: { rate: number; count: number }) => {
@@ -161,7 +160,7 @@ export default function ProductDetailPage() {
                     color="primary"
                     size="lg"
                     className="flex-1"
-                    onPress={() => dispatch(addProductToCart({ product, piece: quantity }))}
+                    onPress={() => addToCart(product, quantity)}
                   >
                     Sepete Ekle
                   </Button>
@@ -171,7 +170,7 @@ export default function ProductDetailPage() {
                     variant="bordered"
                     size="lg"
                     onPress={() => {
-                      dispatch(addProductToCart({ product, piece: quantity }));
+                      addToCart(product, quantity);
                       router.push("/cart");
                     }}
                   >
