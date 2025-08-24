@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 
 export async function GET() {
   try {
-    const response = await getAllPosts(); // return edilecek -> message, error
+    const response = await getAllPosts(); // return edilecek -> message, data
 
     if (response.data) {
       return NextResponse.json(response, { status: 200 });

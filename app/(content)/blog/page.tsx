@@ -1,9 +1,10 @@
 "use client";
 
+import { Post } from "@/types/sanityTypes";
 import { useEffect, useState } from "react";
 
 export default function BlogPage() {
-  const [posts, setPosts] = useState([]);
+  const [posts, setPosts] = useState<Post[]>([]);
 
   useEffect(() => {
     const getPosts = async () => {
@@ -19,5 +20,5 @@ export default function BlogPage() {
     return <div>yükleniyor...</div>;
   }
 
-  return <div>{JSON.stringify(posts)}</div>;
+  return <div>{posts[0].author.slug}</div>;
 }

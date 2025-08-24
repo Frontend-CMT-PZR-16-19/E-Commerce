@@ -1,10 +1,15 @@
 import { groq } from "next-sanity";
 import { client } from "./client";
+import { Post } from "@/types/sanityTypes";
 
-export default async function getAllPosts() {
+export default async function getAllPosts(): Promise<{
+  message: string | unknown;
+  data: null | Post[];
+}> {
   const postsQuery = groq`
   *[_type == "post"]
   {
+    body,
     title,
     "slug": slug.current,
     "author": author -> {
