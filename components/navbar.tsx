@@ -19,7 +19,7 @@ import { siteConfig } from "@/config/site";
 import { ThemeSwitch } from "@/components/theme-switch";
 import { GithubIcon, Logo } from "@/components/icons";
 import { CartIcon } from "@/assets/icons/cartIcon";
-import { useCartStore } from "@/store/cartStore";
+import { useAppSelector } from "@/store/hooks";
 import { CustomUserButton } from "@/components/custom-user-button";
 import {
   SignedIn,
@@ -33,7 +33,7 @@ import { Button } from "@heroui/button";
 import { useRouter } from "next/navigation";
 
 export const Navbar = () => {
-  const products = useCartStore((state) => state.productList);
+  const products = useAppSelector((state) => state.cart.productList);
   const { user, isLoaded, isSignedIn } = useUser();
   const router = useRouter();
 
@@ -46,7 +46,7 @@ export const Navbar = () => {
         <NavbarBrand as="li" className="gap-3 max-w-fit">
           <NextLink className="flex justify-start items-center gap-1" href="/">
             <Logo />
-            <p className="font-bold text-inherit">ACME</p>
+            <p className="font-bold text-inherit">TasoStore</p>
           </NextLink>
         </NavbarBrand>
         <ul className="hidden lg:flex gap-4 justify-start ml-2">
@@ -128,7 +128,7 @@ export const Navbar = () => {
                     ? "danger"
                     : "foreground"
                 }
-                href="#"
+                href={item.href}
                 size="lg"
               >
                 {item.label}

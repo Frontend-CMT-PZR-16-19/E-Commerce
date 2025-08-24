@@ -1,7 +1,7 @@
 "use client";
 
 import { CartProduct } from "@/components/cartProduct";
-import { useCartStore } from "@/store/cartStore";
+import { useAppSelector } from "@/store/hooks";
 import { Product } from "@/types";
 import { Button } from "@heroui/button";
 import { Card } from "@heroui/card";
@@ -13,7 +13,7 @@ interface CartProductState {
 }
 
 export default function Cart() {
-  const cart = useCartStore((state) => state.productList);
+  const cart = useAppSelector((state) => state.cart.productList);
   const [state, setState] = useState<CartProductState[]>([]);
 
   let totalPrice = cart.reduce(function (acc, curr) {
