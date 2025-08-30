@@ -1,4 +1,4 @@
-# BLOG
+# BLOG
 
 - blog yazıları için /blog adresinde blogCart komponentleri olacak.
 - blog kart komponenti blog yazısıyla alakalı başlık yazar ve resim gibi bilgileri gösterecek.
