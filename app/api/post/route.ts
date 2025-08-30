@@ -1,4 +1,4 @@
-import getAllPosts from "@/sanity/lib/postQueries";
+import { getAllPosts } from "@/sanity/lib/postQueries";
 import { NextResponse } from "next/server";
 
 export async function GET() {
