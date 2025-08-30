@@ -1,18 +1,20 @@
 "use client";
 
+import { BlogCard } from "@/components/blogCard";
 import { Post } from "@/types/sanityTypes";
 import { useEffect, useState } from "react";
 
 export default function BlogPage() {
   const [posts, setPosts] = useState<Post[]>([]);
 
-  useEffect(() => {
-    const getPosts = async () => {
-      await fetch("/api/post")
-        .then((response) => response.json())
-        .then((jsonResponse) => setPosts(jsonResponse.data));
-    };
 
+  const getPosts = async () => {
+    await fetch("/api/post")
+      .then((response) => response.json())
+      .then((jsonResponse) => setPosts(jsonResponse.data));
+  };
+
+  useEffect(() => {
     getPosts();
   }, []);
 
@@ -20,5 +22,5 @@ export default function BlogPage() {
     return <div>yükleniyor...</div>;
   }
 
-  return <div>{posts[0].author.slug}</div>;
+  return <div className="grid grid-cols-4 gap-4 w-full">{posts.map((post) => <BlogCard post={post} key={post._id} />)}</div>;
 }
