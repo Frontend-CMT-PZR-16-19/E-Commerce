@@ -8,6 +8,7 @@ import { Product } from "@/types";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Spinner } from "@heroui/spinner";
+import { useTranslations } from "next-intl";
 
 const generateDealInfo = (product: Product) => {
   const discountPercentages = [15, 20, 25, 30];
@@ -26,6 +27,7 @@ export default function Home() {
   const router = useRouter();
   const [products, setProducts] = useState<Product[] | null>(null);
   const [loading, setLoading] = useState(true);
+  const t = useTranslations();
 
   useEffect(() => {
     const getProducts = async () => {
@@ -50,6 +52,7 @@ export default function Home() {
     <div className="min-h-screen">
       <section className="bg-gradient-to-r from-slate-800 to-slate-900 text-white py-16">
         <div className="container mx-auto px-4 text-center">
+          <h1 className="text-6xl">{t("HomePage")}</h1>
           <h1 className="text-4xl font-bold mb-4">TasoStore</h1>
           <p className="text-lg mb-6 max-w-2xl mx-auto text-gray-300">
             Premium online shopping destination offering quality products across electronics, fashion, home, and lifestyle categories.
@@ -100,11 +103,7 @@ export default function Home() {
                       className="object-contain w-full h-48 bg-white"
                       src={product.image}
                     />
-                    <Badge 
-                      color="danger" 
-                      content={`-${dealInfo.discount}%`}
-                      className="absolute top-2 right-2"
-                    />
+                    
                   </CardHeader>
                   <CardBody className="overflow-visible py-2">
                     <h4 className="font-bold text-sm mb-2 line-clamp-2 h-10 overflow-hidden">{product.title}</h4>
